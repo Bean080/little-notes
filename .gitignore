@@ -1,0 +1,11 @@
+# Keep private settings and local recordings out of the site repository.
+.env
+.env.*
+!.env.example
+*.mp3
+*.m4a
+*.webm
+*.wav
+
+node_modules/
+*.log

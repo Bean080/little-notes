@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MP3 encoder smoke test</title>
+    <script src="../mp3-converter.js" defer></script>
+    <script src="./mp3-smoke.js" defer></script>
+  </head>
+  <body>
+    <h1>MP3 encoder smoke test</h1>
+    <p>Generates a short tone locally and checks the exported file.</p>
+    <button id="run" type="button">Run test</button>
+    <button id="run-recorder" type="button">Test browser recording</button>
+    <p id="result" role="status">Ready</p>
+    <audio id="preview" controls hidden></audio>
+  </body>
+</html>

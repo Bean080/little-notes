@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#141216" />
+    <meta name="description" content="A simple space to record and revisit voice memos." />
+    <title>Little Notes — Voice Memos</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css?v=dark-1" />
+    <script src="./mp3-converter.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="Little Notes home">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </span>
+          <span>little notes<span class="brand-period">.</span></span>
+        </a>
+        <span class="header-label">VOICE MEMOS</span>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <h1 id="page-title">Voice memos</h1>
+          <p class="intro-copy">Record a thought. Keep it as an MP3.</p>
+        </section>
+
+        <section class="recorder-card" aria-labelledby="recorder-title">
+          <div class="card-heading">
+            <h2 id="recorder-title">New recording</h2>
+            <span class="limit-label">Up to 5 minutes</span>
+          </div>
+
+          <label class="field-label" for="memo-title">Title <span>(optional)</span></label>
+          <input id="memo-title" class="title-input" type="text" maxlength="80" placeholder="Give this memo a title" autocomplete="off" />
+
+          <div id="recording-display" class="recording-display" aria-label="Recording timer">
+            <span class="recording-indicator" aria-hidden="true"></span>
+            <div class="recording-time">
+              <span id="timer" class="timer">00:00</span>
+              <span id="recording-caption" class="recording-caption">Ready to record</span>
+            </div>
+          </div>
+
+          <div class="recording-actions">
+            <button id="record-button" class="button button-primary" type="button">
+              <span class="record-dot" aria-hidden="true"></span> Start recording
+            </button>
+            <button id="stop-button" class="button button-secondary" type="button" disabled>
+              Finish recording
+            </button>
+          </div>
+          <p id="status" class="status" role="status" aria-live="polite">
+            Your browser will ask for microphone access when you start.
+          </p>
+        </section>
+
+        <section class="memos-section" aria-labelledby="memos-title">
+          <div class="memos-heading">
+            <h2 id="memos-title">Recordings <span id="memo-count" class="memo-count">0</span></h2>
+            <span class="session-badge">This tab only</span>
+          </div>
+          <div id="memo-list" class="memo-list" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Recordings are temporary in this tab. Download an MP3 to keep it.</p>
+      </footer>
+    </div>
+  </body>
+</html>

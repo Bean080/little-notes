@@ -1,0 +1,198 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #f3ecef;
+  background: #141216;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body { min-height: 100vh; margin: 0; }
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+button:disabled { cursor: not-allowed; }
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid #d78198;
+  outline-offset: 3px;
+}
+
+.site-shell { width: min(100%, 820px); margin: 0 auto; padding: 0 30px; }
+
+.site-header {
+  min-height: 83px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #302930;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f3ecef;
+  text-decoration: none;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.05em;
+}
+
+.brand-period { color: #c25a74; }
+
+.brand-mark {
+  width: 27px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.brand-mark span { width: 3px; height: 10px; border-radius: 3px; background: #b64c67; }
+.brand-mark span:nth-child(2), .brand-mark span:nth-child(4) { height: 19px; }
+.brand-mark span:nth-child(3) { height: 26px; }
+.header-label { color: #8f848c; font-size: 10px; font-weight: 700; letter-spacing: .18em; }
+
+.intro { padding: 59px 0 31px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 10px; font-size: clamp(36px, 6vw, 52px); line-height: 1.1; letter-spacing: -.055em; }
+.intro-copy { margin-bottom: 0; color: #aaa0a7; font-size: 15px; line-height: 1.6; }
+
+.recorder-card {
+  padding: 29px;
+  border: 1px solid #3b3038;
+  border-radius: 15px;
+  background: #201b21;
+}
+
+.card-heading, .memos-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+h2 { margin-bottom: 0; font-size: 20px; line-height: 1.3; letter-spacing: -.025em; }
+.limit-label, .session-badge { color: #94878f; font-size: 12px; white-space: nowrap; }
+.field-label { display: block; margin: 27px 0 9px; font-size: 13px; font-weight: 600; }
+.field-label span { color: #958891; font-weight: 400; }
+.title-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #4a3b45;
+  border-radius: 8px;
+  outline: none;
+  background: #171419;
+  color: #f3ecef;
+}
+.title-input::placeholder { color: #776e75; }
+.title-input:focus { border-color: #b64c67; box-shadow: 0 0 0 3px #b64c6725; }
+
+.recording-display {
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 20px 0;
+  border: 1px solid #382e36;
+  border-radius: 10px;
+  background: #171419;
+}
+.recording-indicator { width: 14px; height: 14px; flex: none; border-radius: 50%; background: #67545e; }
+.is-recording .recording-indicator { background: #c65772; box-shadow: 0 0 0 5px #c6577220; animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 11px #c657720a; } }
+.recording-time { display: flex; flex-direction: column; gap: 3px; }
+.timer { font-size: 38px; line-height: 1; font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.recording-caption { color: #948790; font-size: 12px; }
+.is-recording .recording-caption { color: #d9839a; }
+
+.recording-actions { display: flex; gap: 10px; }
+.button {
+  min-height: 46px;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 17px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background .15s ease;
+}
+.button-primary { background: #8f314a; color: #fff5f8; }
+.button-primary:not(:disabled):hover { background: #a13c57; }
+.button-primary:disabled { opacity: .55; }
+.button-secondary { border-color: #59424d; background: #292128; color: #eee0e5; }
+.button-secondary:not(:disabled):hover { background: #352730; }
+.button-secondary:disabled { color: #82757e; opacity: .7; }
+.record-dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.status { min-height: 18px; margin: 15px 0 0; color: #a99ca5; font-size: 12px; line-height: 1.5; }
+.status-error { color: #e29aaa; }
+
+.memos-section { padding: 48px 0 65px; }
+.memos-heading { margin-bottom: 17px; }
+.memo-count {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  place-items: center;
+  vertical-align: middle;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #382b34;
+  color: #d5bdc6;
+  font-size: 11px;
+  font-weight: 700;
+}
+.memo-list { display: grid; gap: 11px; }
+.empty-state {
+  min-height: 116px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 22px;
+  border: 1px dashed #473841;
+  border-radius: 10px;
+  text-align: center;
+}
+.empty-state strong { font-size: 14px; font-weight: 600; }
+.empty-state p { margin: 5px 0 0; color: #958891; font-size: 12px; }
+.memo-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 15px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid #3b3038;
+  border-radius: 10px;
+  background: #201b21;
+}
+.memo-info { min-width: 0; }
+.memo-info h3 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0 0 5px; font-size: 14px; }
+.memo-info p { margin: 0; color: #9a8d96; font-size: 11px; }
+.memo-item audio { display: block; width: min(100%, 420px); height: 38px; margin-top: 13px; color-scheme: dark; }
+.memo-actions { display: flex; gap: 8px; }
+.text-button { padding: 8px 10px; border: 1px solid #59434e; border-radius: 7px; background: transparent; color: #eee0e5; font-size: 11px; font-weight: 700; }
+.text-button:hover { background: #382831; }
+.text-button-danger:hover { border-color: #965268; color: #e8a3b4; }
+
+.site-footer { padding: 25px 0; border-top: 1px solid #302930; color: #8f848c; font-size: 12px; line-height: 1.5; }
+.site-footer p { margin: 0; }
+
+@media (max-width: 600px) {
+  .site-shell { padding: 0 20px; }
+  .site-header { min-height: 72px; }
+  .intro { padding: 44px 0 26px; }
+  .recorder-card { padding: 22px; }
+  .recording-actions { flex-direction: column; }
+  .button { width: 100%; flex: none; }
+  .memos-section { padding: 42px 0 55px; }
+  .memo-item { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
