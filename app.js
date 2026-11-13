@@ -1,5 +1,37 @@
 const MAX_DURATION_SECONDS = 300;
+// The theme control and browser toolbar color are updated together.
+const themeToggle = document.querySelector("#theme-toggle");
+const themeColor = document.querySelector('meta[name="theme-color"]');
 
+// Apply one theme consistently to the page and its accessible toggle label.
+function applyTheme(theme) {
+  const isLight = theme === "light";
+  document.documentElement.dataset.theme = isLight ? "light" : "dark";
+  themeToggle.textContent = isLight ? "Dark mode" : "Light mode";
+  themeToggle.setAttribute("aria-label", `Switch to ${isLight ? "dark" : "light"} mode`);
+  themeToggle.setAttribute("aria-pressed", String(isLight));
+  themeColor.content = isLight ? "#f7f3f5" : "#141216";
+}
+
+let savedTheme = null;
+// Remember the visitor's choice when browser storage is available.
+try {
+  savedTheme = localStorage.getItem("little-notes-theme");
+} catch {
+  // Continue with the default theme when browser storage is unavailable.
+}
+applyTheme(savedTheme === "light" ? "light" : "dark");
+themeToggle.addEventListener("click", () => {
+  const nextTheme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  applyTheme(nextTheme);
+  try {
+    localStorage.setItem("little-notes-theme", nextTheme);
+  } catch {
+    // The selected theme remains active until this page is closed.
+  }
+});
+
+// Keep references to page elements used by the recording and memo list.
 const recordButton = document.querySelector("#record-button");
 const stopButton = document.querySelector("#stop-button");
 const titleInput = document.querySelector("#memo-title");
@@ -11,6 +43,7 @@ const memoList = document.querySelector("#memo-list");
 const memoCount = document.querySelector("#memo-count");
 
 const memos = [];
+// These variables track the current recording while it is in progress.
 let recorder = null;
 let stream = null;
 let chunks = [];
@@ -19,27 +52,32 @@ let timerInterval = null;
 let recordingFailed = false;
 
 function formatTime(seconds) {
+  // Turn a number of seconds into a timer display such as 02:05.
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
 }
 
 function setStatus(message, isError = false) {
+  // Show a message below the recorder, with a different style for errors.
   status.textContent = message;
   status.classList.toggle("status-error", isError);
 }
 
 function getSupportedMimeType() {
+  // Use the first recording format supported by this browser.
   const options = ["audio/webm;codecs=opus", "audio/mp4", "audio/webm"];
   return options.find((type) => MediaRecorder.isTypeSupported(type)) || "";
 }
 
 function releaseMicrophone() {
+  // Stop all microphone tracks so the browser can release the device.
   stream?.getTracks().forEach((track) => track.stop());
   stream = null;
 }
 
 function resetRecorderControls() {
+  // Return the timer and buttons to their ready state after recording.
   window.clearInterval(timerInterval);
   timerInterval = null;
   display.classList.remove("is-recording");
@@ -50,6 +88,7 @@ function resetRecorderControls() {
 }
 
 function renderMemos() {
+  // Rebuild the recordings area from the current in-memory memo list.
   memoCount.textContent = String(memos.length);
   memoList.replaceChildren();
 
@@ -62,6 +101,7 @@ function renderMemos() {
   }
 
   for (const memo of memos) {
+    // Create a player and download/delete buttons for each recording.
     const item = document.createElement("article");
     item.className = "memo-item";
 
@@ -110,6 +150,7 @@ function renderMemos() {
 }
 
 async function startRecording() {
+  // Ask for microphone access, then begin capturing audio.
   recordButton.disabled = true;
   setStatus("Requesting microphone access…");
 
@@ -155,6 +196,7 @@ function stopRecording() {
 }
 
 async function finishRecording() {
+  // Package the captured audio, convert it to MP3, and show it in the list.
   const duration = Math.min(Math.max(1, Math.round((Date.now() - startedAt) / 1000)), MAX_DURATION_SECONDS);
   const mimeType = recorder?.mimeType || chunks[0]?.type || "audio/webm";
   const recordedChunks = chunks;
@@ -193,6 +235,7 @@ async function finishRecording() {
 }
 
 if (window.location.protocol === "file:") {
+  // A local web server or HTTPS is needed to load the MP3 worker safely.
   recordButton.disabled = true;
   setStatus("Open this site through localhost or HTTPS to record MP3s. Opening index.html directly cannot load the MP3 encoder.", true);
 } else if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
@@ -204,6 +247,7 @@ if (window.location.protocol === "file:") {
 }
 
 window.addEventListener("pagehide", () => {
+  // Release temporary resources when the visitor leaves or reloads the page.
   releaseMicrophone();
   memos.forEach((memo) => URL.revokeObjectURL(memo.url));
 });

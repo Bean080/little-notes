@@ -1,5 +1,6 @@
 const mp3WorkerUrl = new URL("./mp3-worker.js", document.currentScript.src).href;
 
+// Convert captured browser audio into MP3 data for the recording list.
 async function convertToMp3(recordedBlob) {
   if (!window.OfflineAudioContext || !window.Worker) {
     throw new Error("This browser cannot convert audio to MP3.");
@@ -14,6 +15,7 @@ async function convertToMp3(recordedBlob) {
     throw new Error("The browser could not decode this recording. Try recording for at least a second.");
   }
   const samples = new Float32Array(decoded.length);
+  // Combine audio channels into one track for the MP3 encoder.
   for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
     const channelData = decoded.getChannelData(channel);
     for (let i = 0; i < channelData.length; i++) {
@@ -22,6 +24,7 @@ async function convertToMp3(recordedBlob) {
   }
 
   return new Promise((resolve, reject) => {
+    // Run the encoder in a worker so encoding does not freeze the page.
     const worker = new Worker(mp3WorkerUrl);
     worker.addEventListener("message", (event) => {
       worker.terminate();

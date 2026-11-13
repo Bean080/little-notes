@@ -1,17 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Page title, mobile settings, styles, and scripts. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#141216" />
     <meta name="description" content="A simple space to record and revisit voice memos." />
     <title>Little Notes — Voice Memos</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <link rel="stylesheet" href="./styles.css?v=dark-1" />
+    <link rel="stylesheet" href="./styles.css?v=theme-toggle-1" />
     <script src="./mp3-converter.js" defer></script>
     <script src="./app.js" defer></script>
   </head>
   <body>
+    <!-- The header holds the site name and saved light/dark mode control. -->
     <div class="site-shell">
       <header class="site-header">
         <a class="brand" href="./" aria-label="Little Notes home">
@@ -20,9 +22,13 @@
           </span>
           <span>little notes<span class="brand-period">.</span></span>
         </a>
-        <span class="header-label">VOICE MEMOS</span>
+        <div class="header-tools">
+          <span class="header-label">VOICE MEMOS</span>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">Light mode</button>
+        </div>
       </header>
 
+      <!-- Main content: recorder first, followed by recordings from this tab. -->
       <main>
         <section class="intro" aria-labelledby="page-title">
           <h1 id="page-title">Voice memos</h1>
@@ -68,6 +74,7 @@
         </section>
       </main>
 
+      <!-- Reminds visitors that recordings are temporary unless downloaded. -->
       <footer class="site-footer">
         <p>Recordings are temporary in this tab. Download an MP3 to keep it.</p>
       </footer>

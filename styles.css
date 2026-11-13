@@ -1,4 +1,5 @@
 :root {
+  /* Default palette and text settings for dark mode. */
   color-scheme: dark;
   font-family: "Segoe UI", Arial, sans-serif;
   color: #f3ecef;
@@ -6,6 +7,51 @@
   font-synthesis: none;
 }
 
+/* Light mode overrides the dark colors while keeping the same layout. */
+:root[data-theme="light"] {
+  /* The app sets data-theme on the page when light mode is selected. */
+  color-scheme: light;
+  color: #29232a;
+  background: #f7f3f5;
+}
+
+/* Adjust text, surfaces, borders, and native audio controls for light mode. */
+:root[data-theme="light"] body { color: #29232a; }
+:root[data-theme="light"] .site-header,
+:root[data-theme="light"] .site-footer { border-color: #e4dce1; }
+:root[data-theme="light"] .brand { color: #29232a; }
+:root[data-theme="light"] .header-label,
+:root[data-theme="light"] .site-footer { color: #766b73; }
+:root[data-theme="light"] .intro-copy { color: #70656e; }
+:root[data-theme="light"] .recorder-card,
+:root[data-theme="light"] .memo-item { border-color: #e4d9df; background: #fff; }
+:root[data-theme="light"] .limit-label,
+:root[data-theme="light"] .session-badge,
+:root[data-theme="light"] .field-label span,
+:root[data-theme="light"] .recording-caption,
+:root[data-theme="light"] .status,
+:root[data-theme="light"] .memo-info p,
+:root[data-theme="light"] .empty-state p { color: #766b73; }
+:root[data-theme="light"] .title-input,
+:root[data-theme="light"] .recording-display { border-color: #e4d9df; background: #f8f5f7; color: #29232a; }
+:root[data-theme="light"] .title-input::placeholder { color: #968a92; }
+:root[data-theme="light"] .button-secondary { border-color: #d9cbd3; background: #f0e9ed; color: #392e35; }
+:root[data-theme="light"] .button-secondary:not(:disabled):hover { background: #e8dde3; }
+:root[data-theme="light"] .button-secondary:disabled { color: #8e838a; }
+:root[data-theme="light"] .memo-count { background: #eee3e9; color: #6b4656; }
+:root[data-theme="light"] .empty-state { border-color: #d9cbd3; }
+:root[data-theme="light"] .text-button { border-color: #d9cbd3; color: #392e35; }
+:root[data-theme="light"] .text-button:hover { background: #f2e8ed; }
+:root[data-theme="light"] .memo-item audio { color-scheme: light; }
+
+.header-tools { display: flex; align-items: center; gap: 16px; }
+/* Keep the theme button compact so it fits beside the site label. */
+.theme-toggle { padding: 8px 11px; border: 1px solid #59424d; border-radius: 7px; background: transparent; color: inherit; font-size: 11px; font-weight: 700; }
+.theme-toggle:hover { background: #352730; }
+:root[data-theme="light"] .theme-toggle { border-color: #d9cbd3; }
+:root[data-theme="light"] .theme-toggle:hover { background: #f0e9ed; }
+
+/* Shared defaults keep element sizes predictable across the page. */
 * { box-sizing: border-box; }
 
 body { min-height: 100vh; margin: 0; }
@@ -21,6 +67,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   outline-offset: 3px;
 }
 
+/* Center the site content and arrange the top navigation. */
 .site-shell { width: min(100%, 820px); margin: 0 auto; padding: 0 30px; }
 
 .site-header {
@@ -58,11 +105,13 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .brand-mark span:nth-child(3) { height: 26px; }
 .header-label { color: #8f848c; font-size: 10px; font-weight: 700; letter-spacing: .18em; }
 
+/* Page introduction and shared heading spacing. */
 .intro { padding: 59px 0 31px; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 10px; font-size: clamp(36px, 6vw, 52px); line-height: 1.1; letter-spacing: -.055em; }
 .intro-copy { margin-bottom: 0; color: #aaa0a7; font-size: 15px; line-height: 1.6; }
 
+/* Recorder panel, title field, and timer display. */
 .recorder-card {
   padding: 29px;
   border: 1px solid #3b3038;
@@ -107,6 +156,7 @@ h2 { margin-bottom: 0; font-size: 20px; line-height: 1.3; letter-spacing: -.025e
 .recording-caption { color: #948790; font-size: 12px; }
 .is-recording .recording-caption { color: #d9839a; }
 
+/* Recording buttons and messages shown during recording. */
 .recording-actions { display: flex; gap: 10px; }
 .button {
   min-height: 46px;
@@ -132,6 +182,7 @@ h2 { margin-bottom: 0; font-size: 20px; line-height: 1.3; letter-spacing: -.025e
 .status { min-height: 18px; margin: 15px 0 0; color: #a99ca5; font-size: 12px; line-height: 1.5; }
 .status-error { color: #e29aaa; }
 
+/* Recordings list, empty message, players, and item actions. */
 .memos-section { padding: 48px 0 65px; }
 .memos-heading { margin-bottom: 17px; }
 .memo-count {
@@ -179,9 +230,11 @@ h2 { margin-bottom: 0; font-size: 20px; line-height: 1.3; letter-spacing: -.025e
 .text-button:hover { background: #382831; }
 .text-button-danger:hover { border-color: #965268; color: #e8a3b4; }
 
+/* Small note at the bottom of the page. */
 .site-footer { padding: 25px 0; border-top: 1px solid #302930; color: #8f848c; font-size: 12px; line-height: 1.5; }
 .site-footer p { margin: 0; }
 
+/* On narrow screens, reduce spacing and stack controls for easier tapping. */
 @media (max-width: 600px) {
   .site-shell { padding: 0 20px; }
   .site-header { min-height: 72px; }
@@ -193,6 +246,7 @@ h2 { margin-bottom: 0; font-size: 20px; line-height: 1.3; letter-spacing: -.025e
   .memo-item { grid-template-columns: 1fr; }
 }
 
+/* Respect system settings that ask the page to reduce animation. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }

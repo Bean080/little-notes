@@ -1,6 +1,7 @@
 // Keep MP3 encoding off the main thread so the page stays responsive.
 importScripts("./vendor/wasm-media-encoders/WasmMediaEncoder.min.js");
 
+// The page sends audio samples here and receives either an MP3 or an error.
 self.addEventListener("message", async (event) => {
   try {
     const { samples, sampleRate } = event.data;
@@ -9,6 +10,7 @@ self.addEventListener("message", async (event) => {
     encoder.configure({ sampleRate, channels: 1, bitrate: 96 });
 
     const output = [];
+    // Encode in smaller pieces, then collect them into one playable file.
     const blockSize = 16384;
     for (let offset = 0; offset < samples.length; offset += blockSize) {
       const bytes = encoder.encode([samples.subarray(offset, offset + blockSize)]);
